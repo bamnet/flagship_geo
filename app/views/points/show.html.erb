@@ -1,0 +1,25 @@
+<p class="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @point.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @point.description %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @point.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @point.longitude %>
+</p>
+
+
+<%= link_to 'Edit', edit_point_path(@point) %> |
+<%= link_to 'Back', points_path %>
