@@ -9,13 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100527185610) do
+ActiveRecord::Schema.define(:version => 20100601153906) do
 
   create_table "points", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.decimal  "latitude",    :precision => 15, :scale => 10
-    t.decimal  "longitude",   :precision => 15, :scale => 10
+    t.decimal  "latitude",    :default => 0.0
+    t.decimal  "longitude",   :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
