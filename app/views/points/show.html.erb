@@ -1,3 +1,18 @@
+<% content_for :js_ready do %>
+    var point = new google.maps.LatLng(<%= @point.latitude %>,<%= @point.longitude %>);
+    var myOptions = {
+      zoom: 13,
+      center: point,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    
+    var marker = new google.maps.Marker({
+        position: point, 
+        map: map
+    });
+<% end %>
+
 <p class="notice"><%= notice %></p>
 
 <p>
@@ -20,6 +35,7 @@
   <%= @point.longitude %>
 </p>
 
+<%= map_canvas %>
 
 <%= link_to 'Edit', edit_point_path(@point) %> |
 <%= link_to 'Back', points_path %>

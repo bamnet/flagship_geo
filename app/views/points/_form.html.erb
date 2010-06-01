@@ -1,3 +1,33 @@
+<% content_for :js_ready do %>
+    var origin = new google.maps.LatLng(<%= @point.latitude %>,<%= @point.longitude %>);
+    var myOptions = {
+      zoom: 4,
+      center: origin,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    update_fields(origin);
+    
+    var marker = new google.maps.Marker({
+        position: origin, 
+        map: map,
+        draggable: true
+    });
+    
+    google.maps.event.addListener(marker, "drag", function(){
+      update_fields(marker.getPosition());
+    });
+    google.maps.event.addListener(marker, "dragend", function(){
+      map.setCenter(marker.getPosition());
+    });
+<% end %>
+<% content_for :js do %>
+  function update_fields(latlng){
+    $('#point_latitude').val(latlng.lat());
+    $('#point_longitude').val(latlng.lng());
+  }
+<% end %>
+
 <%= form_for(@point) do |f| %>
   <% if @point.errors.any? %>
   <div id="errorExplanation">
@@ -26,6 +56,7 @@
     <%= f.label :longitude %><br />
     <%= f.text_field :longitude %>
   </div>
+  <%= map_canvas %>
   <div class="actions">
     <%= f.submit %>
   </div>
