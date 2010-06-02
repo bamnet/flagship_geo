@@ -1,0 +1,22 @@
+<p class="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @layer.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @layer.description %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <span style="background-color: <%= @layer.color %>;">
+    <%= @layer.color %>
+  </span>
+</p>
+
+
+<%= link_to 'Edit', edit_layer_path(@layer) %> |
+<%= link_to 'Back', layers_path %>

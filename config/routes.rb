@@ -1,4 +1,6 @@
 Geo::Application.routes.draw do |map|
+  resources :layers
+
   resources :points
 
   # The priority is based upon order of creation:
