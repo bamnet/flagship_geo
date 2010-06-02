@@ -7,10 +7,19 @@
     }
     var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     
+    var infowindow = new google.maps.InfoWindow({
+        content: "<%=raw @point.description %>"
+    });
+    
     var marker = new google.maps.Marker({
         position: point, 
-        map: map
+        map: map,
+        title: "<%= @point.name %>"
     });
+    
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.open(map, marker);
+    })
 <% end %>
 
 <p class="notice"><%= notice %></p>
@@ -22,7 +31,7 @@
 
 <p>
   <b>Description:</b>
-  <%= @point.description %>
+  <%=raw @point.description %>
 </p>
 
 <p>
