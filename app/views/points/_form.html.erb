@@ -56,6 +56,10 @@
     <%= f.label :longitude %><br />
     <%= f.text_field :longitude %>
   </div>
+  <div class="field">
+    <%= f.label :layer %><br />
+    <%= f.collection_select :layer_id, Layer.all, :id, :name %>
+  </div>
   <%= map_canvas %>
   <div class="actions">
     <%= f.submit %>

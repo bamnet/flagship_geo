@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100602144121) do
+ActiveRecord::Schema.define(:version => 20100616151444) do
 
   create_table "layers", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20100602144121) do
     t.decimal  "longitude",   :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "layer_id"
   end
 
 end
