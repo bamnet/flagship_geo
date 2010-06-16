@@ -1,4 +1,4 @@
-<h1>Listing points</h1>
+<h1><%= @layer.name %> points</h1>
 
 <table>
   <tr>
@@ -17,13 +17,13 @@
     <td><%= point.description %></td>
     <td><%= point.latitude %></td>
     <td><%= point.longitude %></td>
-    <td><%= link_to 'Show', point %></td>
-    <td><%= link_to 'Edit', edit_point_path(point) %></td>
-    <td><%= link_to 'Destroy', point, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', [@layer, point] %></td>
+    <td><%= link_to 'Edit', edit_layer_point_path(@layer, point) %></td>
+    <td><%= link_to 'Destroy', [@layer, point], :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Point', new_point_path %>
+<%= link_to 'New Point', new_layer_point_path %>

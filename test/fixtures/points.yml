@@ -5,9 +5,11 @@ one:
   description: MyText
   latitude: 9.99
   longitude: 9.99
+  layer: one
 
 two:
   name: MyString
   description: MyText
   latitude: 9.99
   longitude: 9.99
+  layer: one

@@ -35,6 +35,11 @@
 </p>
 
 <p>
+  <b>Layer:</b>
+  <%= @point.layer.name %>
+</p>
+
+<p>
   <b>Latitude:</b>
   <%= @point.latitude %>
 </p>
@@ -46,5 +51,5 @@
 
 <%= map_canvas %>
 
-<%= link_to 'Edit', edit_point_path(@point) %> |
-<%= link_to 'Back', points_path %>
+<%= link_to 'Edit', edit_layer_point_path(@layer, @point) %> |
+<%= link_to 'Back', layer_points_path %>

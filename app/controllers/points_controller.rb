@@ -1,8 +1,16 @@
 class PointsController < ApplicationController
+  before_filter :get_layer
+  
+  # The before_filter action to get the current layer for
+  # for all the points.
+  def get_layer
+    @layer = Layer.find(params[:layer_id])
+  end
+
   # GET /points
   # GET /points.xml
   def index
-    @points = Point.all
+    @points = @layer.points.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +34,7 @@ class PointsController < ApplicationController
   # GET /points/new
   # GET /points/new.xml
   def new
-    @point = Point.new
+    @point = Point.new({:layer => @layer})
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,7 +54,7 @@ class PointsController < ApplicationController
 
     respond_to do |format|
       if @point.save
-        format.html { redirect_to(@point, :notice => 'Point was successfully created.') }
+        format.html { redirect_to([@layer, @point], :notice => 'Point was successfully created.') }
         format.xml  { render :xml => @point, :status => :created, :location => @point }
       else
         format.html { render :action => "new" }
@@ -62,7 +70,7 @@ class PointsController < ApplicationController
 
     respond_to do |format|
       if @point.update_attributes(params[:point])
-        format.html { redirect_to(@point, :notice => 'Point was successfully updated.') }
+        format.html { redirect_to([@layer, @point], :notice => 'Point was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -78,7 +86,7 @@ class PointsController < ApplicationController
     @point.destroy
 
     respond_to do |format|
-      format.html { redirect_to(points_url) }
+      format.html { redirect_to(layer_points_url) }
       format.xml  { head :ok }
     end
   end
