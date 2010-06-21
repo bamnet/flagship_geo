@@ -53,4 +53,33 @@ class PointTest < ActiveSupport::TestCase
       assert point.invalid?, "#{long} should be invalid"
     end
   end
+  
+  # Test that the 3 cartesian value functions for x, y, and z
+  # work as expected.
+  test "cartesion values" do
+    tests = [
+              {:latitude => 0, :longitude => 0,
+              :answers => {:x => 1, :y=>0, :z => 0}},
+              
+              {:latitude => 90, :longitude => 90,
+              :answers => {:x => 0, :y=>0, :z => 1}},
+              
+              {:latitude => 0, :longitude => 90,
+              :answers => {:x => 0, :y=>1, :z => 0}},
+              
+              {:latitude => 90, :longitude => 0,
+              :answers => {:x => 0, :y=>0, :z => 1}},
+              
+              {:latitude => 45, :longitude => 45,
+              :answers => {:x => 0.5, :y=>0.5, :z => (1/Math.sqrt(2))}}
+            ]
+            
+    tests.each do |data|
+      point = Point.new(:name => "Test Point", :latitude => data[:latitude], :longitude => data[:longitude])
+      threshold = 0.000001
+      assert_in_delta point.x, data[:answers][:x], threshold, "Lat: #{data[:latitude]}, Long: #{data[:longitude]}"
+      assert_in_delta point.y, data[:answers][:y], threshold, "Lat: #{data[:latitude]}, Long: #{data[:longitude]}"
+      assert_in_delta point.z, data[:answers][:z], threshold, "Lat: #{data[:latitude]}, Long: #{data[:longitude]}"
+    end    
+  end
 end

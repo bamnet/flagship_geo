@@ -13,13 +13,13 @@ class Point < ActiveRecord::Base
     Math.cos(latitude.degrees) * Math.cos(longitude.degrees)
   end
   
-  # The cartesian y coordinate of a point
+  # The cartesian y coordinate of a point.
   def y
     require 'degrees'
     Math.cos(latitude.degrees) * Math.sin(longitude.degrees)
   end
   
-  # The cartesian z coordinate of a point
+  # The cartesian z coordinate of a point.
   def z
     require 'degrees'
     Math.sin(latitude.degrees)
