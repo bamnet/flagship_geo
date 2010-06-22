@@ -1,25 +1,9 @@
 <% content_for :js_ready do %>
-    var point = new google.maps.LatLng(<%= @point.latitude %>,<%= @point.longitude %>);
-    var myOptions = {
-      zoom: 13,
-      center: point,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    <% Point.include_root_in_json = false %>
+    var point = <%=raw @point.to_json() %>;
     
-    var infowindow = new google.maps.InfoWindow({
-        content: "<%=raw @point.description %>"
-    });
-    
-    var marker = new google.maps.Marker({
-        position: point, 
-        map: map,
-        title: "<%= @point.name %>"
-    });
-    
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map, marker);
-    })
+    var map = setup_map(point, 13);
+    add_point_to_map(point, map);
 <% end %>
 
 <p class="notice"><%= notice %></p>
