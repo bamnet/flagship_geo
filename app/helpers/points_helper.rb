@@ -16,7 +16,7 @@ module PointsHelper
     hypotenuse = Math.sqrt(x * x + y * y)
     latitude = Math.atan2(z, hypotenuse).radians
     
-    [latitude, longitude]
+    Point.new(:name => "Midpoint", :latitude => latitude, :longitude => longitude)
   end
 
 end

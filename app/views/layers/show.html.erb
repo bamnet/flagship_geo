@@ -1,3 +1,33 @@
+<% @midpoint = midpoint(@layer.points) %>
+<% content_for :js_ready do %>
+    var midpoint = new google.maps.LatLng(<%= @midpoint.latitude %>,<%= @midpoint.longitude %>);
+    var myOptions = {
+      zoom: 7,
+      center: midpoint,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    
+    $.getJSON('<%= layer_path(:format => :js) %>', function(data) {
+      $.each(data.layer.points, function(index, point){
+        var infowindow = new google.maps.InfoWindow({
+            content: point.description
+        });
+        
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(point.latitude, point.longitude), 
+            map: map,
+            title:point.name
+        });
+        
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map, marker);
+        })
+      });
+    });
+
+<% end %>
+
 <p class="notice"><%= notice %></p>
 
 <p>
@@ -16,6 +46,8 @@
     <%= @layer.color %>
   </span>
 </p>
+
+<%= map_canvas %>
 
 
 <%= link_to 'Edit', edit_layer_path(@layer) %> |
