@@ -1,0 +1,27 @@
+<h1>Listing paths</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Layer</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @paths.each do |path| %>
+  <tr>
+    <td><%= path.name %></td>
+    <td><%= path.description %></td>
+    <td><%= path.layer.name %></td>
+    <td><%= link_to 'Show', [@layer, path] %></td>
+    <td><%= link_to 'Edit', edit_layer_path_path(@layer, path) %></td>
+    <td><%= link_to 'Destroy', [@layer, path], :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Path', new_layer_path_path %>

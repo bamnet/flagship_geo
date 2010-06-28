@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @path.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @path.description %>
+</p>
+
+<p>
+  <b>Layer:</b>
+  <%= @path.layer.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_layer_path_path(@path) %> |
+<%= link_to 'Back', layer_paths_path %>
