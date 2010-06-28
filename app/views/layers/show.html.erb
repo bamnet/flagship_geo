@@ -2,11 +2,16 @@
   <% Point.include_root_in_json = false %>
   var midpoint = <%=raw midpoint(@layer.points).to_json() %>;
   
-  var map = setup_map(midpoint, 7);
+  var map = setup_map(midpoint, 0);
   $.getJSON('<%= layer_path(:format => :js) %>', function(data) {
+    var map_bounds = new google.maps.LatLngBounds();
     $.each(data.layer.points, function(index, point){
-      add_point_to_map(point, map);
+      marker = add_point_to_map(point, map);
+      map_bounds.extend(marker.position);
     });
+    if(data.layer.points.length > 1){
+      map.fitBounds(map_bounds);
+    }
   });
 <% end %>
 

@@ -31,4 +31,6 @@ function add_point_to_map(point, map){
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map, marker);
   });
+  
+  return marker;
 }
