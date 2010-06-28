@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  latitude: 9.99
+  longitude: 9.99
+  position: 1
+  line_type: MyString
+  line_id: 1
+
+two:
+  latitude: 9.99
+  longitude: 9.99
+  position: 1
+  line_type: MyString
+  line_id: 1
