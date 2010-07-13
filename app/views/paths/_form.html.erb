@@ -1,3 +1,25 @@
+<% content_for :js_ready do %>
+    <% 
+      Point.include_root_in_json = false
+      point = midpoint(@path.coords)
+     %>
+    var point = <%=raw point.to_json() %>;
+    var map = setup_map(point, 1);
+    
+    var polyline = new google.maps.Polyline();
+    polyline.setMap(map);
+    
+    <% @path.coords.each do |coord| %>
+    add_latlng_to_polyline(new google.maps.LatLng(<%= coord.latitude %>, <%= coord.longitude %>), polyline);
+    <% end %>
+    
+    google.maps.event.addListener(map,'click', function(event){
+      var i = polyline.getPath().getLength()
+      add_coord(event.latLng, i, i+1, '#coord_data');
+      add_latlng_to_polyline(event.latLng, polyline);
+    });
+<% end %>
+
 <%= form_for([@layer, @path]) do |f| %>
   <% if @path.errors.any? %>
     <div id="error_explanation">
@@ -23,6 +45,17 @@
     <%= f.label :layer %><br />
     <%= f.collection_select :layer_id, Layer.all, :id, :name %>
   </div>
+  
+  <div id="coord_data">
+  <%= f.fields_for :coords do |coord| %>
+      <%= coord.hidden_field :latitude %>
+      <%= coord.hidden_field :longitude %>
+      <%= coord.hidden_field :position %>
+  <% end %>
+  </div>
+  
+  <%= map_canvas %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

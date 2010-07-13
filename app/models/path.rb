@@ -5,4 +5,6 @@ class Path < ActiveRecord::Base
   
   # Validations
   validates :name, :presence => true
+  
+  accepts_nested_attributes_for :coords, :allow_destroy => true
 end
