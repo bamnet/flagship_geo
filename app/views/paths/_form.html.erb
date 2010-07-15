@@ -14,7 +14,7 @@
     <% end %>
     
     google.maps.event.addListener(map,'click', function(event){
-      var i = polyline.getPath().getLength()
+      var i = polyline.getPath().getLength();
       add_coord(event.latLng, i, i+1, '#coord_data');
       add_latlng_to_polyline(event.latLng, polyline);
     });
