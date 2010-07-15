@@ -1,19 +1,12 @@
 <% content_for :js_ready do %>
-    var origin = new google.maps.LatLng(<%= @point.latitude %>,<%= @point.longitude %>);
-    var myOptions = {
-      zoom: 4,
-      center: origin,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    update_fields(origin);
+    <% 
+      Point.include_root_in_json = false
+    %>
+    var point = <%=raw @point.to_json() %>;
+    var map = setup_map(point, 4);
     
-    var marker = new google.maps.Marker({
-        position: origin, 
-        map: map,
-        draggable: true
-    });
-    
+    var marker = add_point_to_map(point, map, {draggable: true});
+        
     google.maps.event.addListener(marker, "drag", function(){
       update_fields(marker.getPosition());
     });

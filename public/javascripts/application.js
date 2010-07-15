@@ -17,16 +17,24 @@ function setup_map(center_point, zoom_level, div){
 // Add a point (marker) to a map object.
 // The point should be an object with a
 // name, description, latitude, and longitude.
-function add_point_to_map(point, map){
+// Optional: options can be used to override
+// and of the properties of the marker.
+function add_point_to_map(point, map, options){
   var infowindow = new google.maps.InfoWindow({
     content: point.description
   });
   
-  var marker = new google.maps.Marker({
+  var opts = {
     position: new google.maps.LatLng(point.latitude, point.longitude), 
     map: map,
-    title:point.name
-  });
+    title: point.name
+  };
+  
+  jQuery.extend(opts, options);
+  
+  console.log(opts);
+  
+  var marker = new google.maps.Marker(opts);
   
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map, marker);
