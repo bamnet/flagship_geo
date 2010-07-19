@@ -5,18 +5,20 @@
       point = midpoint(@path.coords)
      %>
     var point = <%=raw point.to_json() %>;
-    var map = setup_map(point, 1);
-    var polyline = new google.maps.Polyline();
+    
+    map = setup_map(point, 1);
+    polyline = new google.maps.Polyline();
+    
     polyline.setMap(map);
     
     var coords = <%=raw @path.coords.to_json() %>;
     
     $.each(coords, function(index, coord){
       add_point_to_polyline(coord, polyline);
-      //marker = add_point_to_map(coord, map);
+      add_edit_marker_to_map(coord, index);
     });
         
-    google.maps.event.addListener(map,'click', function(event){
+    google.maps.event.addListener(map, 'click', function(event){
       var i = polyline.getPath().getLength();
       var coord = {
         latitude: event.latLng.lat(),
@@ -25,7 +27,33 @@
       };
       add_coord_to_form(coord, i, '#coord_data');
       add_point_to_polyline(coord, polyline);
+      add_edit_marker_to_map(coord, i)
     });
+<% end %>
+<% content_for :js do %>
+  var map; //The map!
+  var polyline; //The line
+  
+  // Update the hidden fields with the
+  // latitude and longitude.
+  function update_fields(index, latlng){
+    polyline.getPath().setAt(index, latlng);
+    $('#path_coords_attributes_' + index + '_latitude').val(latlng.lat());
+    $('#path_coords_attributes_' + index + '_longitude').val(latlng.lng());
+    return true;
+  }
+  
+  // Add a draggable marker to the map 
+  // update a point on a polyline.
+  function add_edit_marker_to_map(coord, index){
+    var marker = add_point_to_map(coord, map, {draggable: true});
+        
+    google.maps.event.addListener(marker, "drag", function(event){
+      console.log(index);
+      update_fields(index, event.latLng);
+    });
+    return marker;
+  }
 <% end %>
 
 <%= form_for([@layer, @path]) do |f| %>

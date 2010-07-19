@@ -46,7 +46,9 @@ function add_point_to_map(point, map, options){
 // effect any data structure we care
 // about.
 function add_point_to_polyline(point, polyline){
-  polyline.getPath().push(new google.maps.LatLng(point.latitude, point.longitude));
+  var position = new google.maps.LatLng(point.latitude, point.longitude);
+  polyline.getPath().push(position);
+  return position;
 }
 
 // Add a coordinate to the coordinate datastructure.
