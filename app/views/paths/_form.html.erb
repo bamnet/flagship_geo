@@ -1,22 +1,30 @@
 <% content_for :js_ready do %>
     <% 
       Point.include_root_in_json = false
+      Coord.include_root_in_json = false
       point = midpoint(@path.coords)
      %>
     var point = <%=raw point.to_json() %>;
     var map = setup_map(point, 1);
-    
     var polyline = new google.maps.Polyline();
     polyline.setMap(map);
     
-    <% @path.coords.each do |coord| %>
-    add_latlng_to_polyline(new google.maps.LatLng(<%= coord.latitude %>, <%= coord.longitude %>), polyline);
-    <% end %>
+    var coords = <%=raw @path.coords.to_json() %>;
     
+    $.each(coords, function(index, coord){
+      add_point_to_polyline(coord, polyline);
+      //marker = add_point_to_map(coord, map);
+    });
+        
     google.maps.event.addListener(map,'click', function(event){
       var i = polyline.getPath().getLength();
-      add_coord(event.latLng, i, i+1, '#coord_data');
-      add_latlng_to_polyline(event.latLng, polyline);
+      var coord = {
+        latitude: event.latLng.lat(),
+        longitude: event.latLng.lng(),
+        position: i+1
+      };
+      add_coord_to_form(coord, i, '#coord_data');
+      add_point_to_polyline(coord, polyline);
     });
 <% end %>
 

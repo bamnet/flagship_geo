@@ -31,9 +31,7 @@ function add_point_to_map(point, map, options){
   };
   
   jQuery.extend(opts, options);
-  
-  console.log(opts);
-  
+    
   var marker = new google.maps.Marker(opts);
   
   google.maps.event.addListener(marker, 'click', function() {
@@ -43,37 +41,36 @@ function add_point_to_map(point, map, options){
   return marker;
 }
 
-// Add a lagLng to a polyline for
+// Add a coordinate to a polyline for
 // display purposes only.  Does NOT
 // effect any data structure we care
 // about.
-function add_latlng_to_polyline(latlng, polyline){
-  polyline.getPath().push(latlng);
+function add_point_to_polyline(point, polyline){
+  polyline.getPath().push(new google.maps.LatLng(point.latitude, point.longitude));
 }
 
-// Add a latLng to the coordinate datastructure.
-// Required position (order in list) and reference
-// to the location holding the hidden fields.
-function add_coord(latlng, i, position, holder){
+// Add a coordinate to the coordinate datastructure.
+// Requires reference to the location holding the hidden fields.
+function add_coord_to_form(coord, i, holder){
   //Add Latitude
   $('<input>').attr({
     id: 'path_coords_attributes_' + i + '_latitude',
     name: 'path[coords_attributes][' + i + '][latitude]',
-    value: latlng.lat(),
+    value: coord.latitude,
     type: 'hidden',
   }).appendTo(holder);
   //Add Longitude
   $('<input>').attr({
     id: 'path_coords_attributes_' + i + '_longitude',
     name: 'path[coords_attributes][' + i + '][longitude]',
-    value: latlng.lng(),
+    value: coord.longitude,
     type: 'hidden',
   }).appendTo(holder);
   //Add Position
   $('<input>').attr({
     id: 'path_coords_attributes_' + i + '_position',
     name: 'path[coords_attributes][' + i + '][position]',
-    value: position,
+    value: coord.position,
     type: 'hidden',
   }).appendTo(holder);
 }
