@@ -5,6 +5,8 @@ module PointsHelper
   # cartesian coordinates for each point.
   # Logic from: http://www.geomidpoint.com/calculation.html
   def midpoint(points = [])
+    return Point.new(:name => "Midpoint", :latitude => 0, :longitude => 0) if points.empty?
+  
     x = y = z = 0
     points.each do |point|
       x += point.x
