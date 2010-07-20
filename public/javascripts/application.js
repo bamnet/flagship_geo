@@ -72,6 +72,7 @@ function add_coord_to_form(coord, i, holder){
   $('<input>').attr({
     id: 'path_coords_attributes_' + i + '_position',
     name: 'path[coords_attributes][' + i + '][position]',
+    class: 'coord_position_data',
     value: coord.position,
     type: 'hidden',
   }).appendTo(holder);
