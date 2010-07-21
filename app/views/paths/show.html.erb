@@ -1,3 +1,23 @@
+<% content_for :js_ready do %>
+    <% 
+      Point.include_root_in_json = false
+      Coord.include_root_in_json = false
+      point = midpoint(@path.coords)
+     %>
+    var point = <%=raw point.to_json() %>;
+    
+    map = setup_map(point, 1);
+    polyline = new google.maps.Polyline();
+    
+    polyline.setMap(map);
+    
+    var coords = <%=raw @path.coords.to_json() %>;
+    
+    $.each(coords, function(index, coord){
+      add_point_to_polyline(coord, polyline);
+    });
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -15,6 +35,7 @@
   <%= @path.layer.name %>
 </p>
 
+<%= map_canvas %>
 
 <%= link_to 'Edit', edit_layer_path_path(@path) %> |
 <%= link_to 'Back', layer_paths_path %>
