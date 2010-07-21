@@ -27,7 +27,7 @@ class PathsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @path }
-      
+      format.kml  # show.kml.builder
     end
   end
 
