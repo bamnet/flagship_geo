@@ -18,7 +18,16 @@ class LayersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @layer }
-      format.js { render :json => @layer.to_json(:include => {:points => {}, :paths => {:include => :coords} } ) }
+      format.js { render :json => @layer.to_json(
+        :include => {
+          :points => {}, 
+          :paths => {
+            :include => { :coords => {
+              :only => [:position, :latitude, :longitude]
+            }}
+          } 
+        }
+      )}
     end
   end
 
