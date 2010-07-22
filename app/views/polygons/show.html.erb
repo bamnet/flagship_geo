@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @polygon.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @polygon.description %>
+</p>
+
+<p>
+  <b>Layer:</b>
+  <%= @polygon.layer.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_layer_polygon_path(@polygon) %> |
+<%= link_to 'Back', layer_polygons_path %>

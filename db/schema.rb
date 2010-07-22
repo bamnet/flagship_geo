@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100628175822) do
+ActiveRecord::Schema.define(:version => 20100722153142) do
 
   create_table "coords", :force => true do |t|
     t.decimal  "latitude",   :precision => 15, :scale => 10, :default => 0.0
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(:version => 20100628175822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "layer_id"
+  end
+
+  create_table "polygons", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "layer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

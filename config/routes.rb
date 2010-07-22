@@ -2,6 +2,7 @@ Geo::Application.routes.draw do |map|
   resources :layers do
     resources :points
     resources :paths
+    resources :polygons
   end
 
   # The priority is based upon order of creation:
