@@ -53,27 +53,36 @@ function add_point_to_polyline(point, polyline){
 
 // Add a coordinate to the coordinate datastructure.
 // Requires reference to the location holding the hidden fields.
-function add_coord_to_form(coord, i, holder){
+function add_coord_to_form(prefix, coord, i, holder){
   //Add Latitude
   $('<input>').attr({
-    id: 'path_coords_attributes_' + i + '_latitude',
-    name: 'path[coords_attributes][' + i + '][latitude]',
+    id: prefix + '_coords_attributes_' + i + '_latitude',
+    name: prefix + '[coords_attributes][' + i + '][latitude]',
     value: coord.latitude,
     type: 'hidden',
   }).appendTo(holder);
   //Add Longitude
   $('<input>').attr({
-    id: 'path_coords_attributes_' + i + '_longitude',
-    name: 'path[coords_attributes][' + i + '][longitude]',
+    id: prefix + '_coords_attributes_' + i + '_longitude',
+    name: prefix + '[coords_attributes][' + i + '][longitude]',
     value: coord.longitude,
     type: 'hidden',
   }).appendTo(holder);
   //Add Position
   $('<input>').attr({
-    id: 'path_coords_attributes_' + i + '_position',
-    name: 'path[coords_attributes][' + i + '][position]',
+    id: prefix + '_coords_attributes_' + i + '_position',
+    name: prefix + '[coords_attributes][' + i + '][position]',
     class: 'coord_position_data',
     value: coord.position,
     type: 'hidden',
   }).appendTo(holder);
+}
+
+// Update the hidden fields with the
+// latitude and longitude.
+function update_coord_fields(prefix, marker, latLng){
+  var index = marker_data[marker.get('data_id')].html_id;
+  $('#' + prefix + '_coords_attributes_' + index + '_latitude').val(latLng.lat());
+  $('#' + prefix + '_coords_attributes_' + index + '_longitude').val(latLng.lng());
+  return true;
 }

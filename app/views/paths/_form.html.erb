@@ -27,7 +27,7 @@
         longitude: event.latLng.lng(),
         position: next_position
       };
-      add_coord_to_form(coord, index, '#coord_data');
+      add_coord_to_form('path', coord, index, '#coord_data');
       add_point_to_polyline(coord, polyline);
       add_edit_marker_to_map(coord, index);
     });
@@ -36,16 +36,7 @@
   var map; //The map!
   var polyline; //The line
   var marker_data = new Array();
-  
-  // Update the hidden fields with the
-  // latitude and longitude.
-  function update_fields(marker, latLng){
-    var index = marker_data[marker.get('data_id')].html_id;
-    $('#path_coords_attributes_' + index + '_latitude').val(latLng.lat());
-    $('#path_coords_attributes_' + index + '_longitude').val(latLng.lng());
-    return true;
-  }
-  
+    
   // Update the polyline with a new position
   // from a marker.
   function update_line(marker, latLng){
@@ -69,7 +60,7 @@
     
     //Drag to move a marker.
     google.maps.event.addListener(marker, "drag", function(event){
-      update_fields(this, event.latLng);
+      update_coord_fields('path', this, event.latLng);
       update_line(this, event.latLng);
     });
         
@@ -161,11 +152,7 @@
   </div>
   
   <div id="coord_data">
-  <%= f.fields_for :coords do |coord| %>
-      <%= coord.hidden_field :latitude %>
-      <%= coord.hidden_field :longitude %>
-      <%= coord.hidden_field :position, :class=>"coord_position_data" %>
-  <% end %>
+    <%= render :partial => 'coords/form', :locals => {:form => f} %>
   </div>
   
   <%= map_canvas %>
