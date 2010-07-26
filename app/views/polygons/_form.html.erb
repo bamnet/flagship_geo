@@ -1,3 +1,130 @@
+<% content_for :js_ready do %>
+    <% 
+      Point.include_root_in_json = false
+      Coord.include_root_in_json = false
+      point = midpoint(@polygon.coords)
+     %>
+    var point = <%=raw point.to_json() %>;
+    
+    map = setup_map(point, 1);
+    polygon = new google.maps.Polygon();
+    
+    polygon.setMap(map);
+    
+    var coords = <%=raw @polygon.coords.to_json() %>;
+    
+    $.each(coords, function(index, coord){
+      add_point_to_polygon(coord, polygon);
+      add_edit_marker_to_map(coord, index);
+    });
+    
+    //Click to create a new marker.
+    google.maps.event.addListener(map, 'click', function(event){
+      var next_pos = next_position();
+      var index = next_index();
+      var coord = {
+        latitude: event.latLng.lat(),
+        longitude: event.latLng.lng(),
+        position: next_position
+      };
+      add_coord_to_form('polygon', coord, index, '#coord_data');
+      add_point_to_polygon(coord, polygon);
+      add_edit_marker_to_map(coord, index);
+    });
+<% end %>
+<% content_for :js do %>
+  var map; //The map!
+  var polygon; //The line
+  var marker_data = new Array();
+    
+  // Update the polygon with a new position
+  // from a marker.
+  function update_line(marker, latLng){
+    var index = marker_data[marker.get('data_id')].polygon_id;
+    polygon.getPath().setAt(index, latLng);
+  }
+  
+  // Add a draggable marker to the map 
+  // update a point on a polygon.
+  function add_edit_marker_to_map(coord, index){
+    var marker = add_point_to_map(coord, map, {draggable: true});
+    marker.set('data_id', next_index());
+    
+    var data = {
+      html_id: index, 
+      polygon_id: polygon.getPath().length-1,
+      active: true,
+      marker: marker
+    };
+    marker_data.push(data);
+    
+    //Drag to move a marker.
+    google.maps.event.addListener(marker, "drag", function(event){
+      update_coord_fields('polygon', this, event.latLng);
+      update_line(this, event.latLng);
+    });
+        
+    //Right click to delete a marker.
+    google.maps.event.addListener(marker, "rightclick", function(event){
+      //Remove it from the line and map.
+      delete_from_map(this);
+      
+      //For every active point past the one being deleted
+      //decrease its polygon data by one.
+      var i = 0;
+      var max = marker_data.length;
+      for(i = this.get('data_id'); i < max; i++){
+        if(marker_data[i].active){
+          $('#polygon_coords_attributes_' + i + '_position').val(i);
+          marker_data[i].polygon_id--;
+        }
+      }
+      //Remove the position html
+      //and replace it with destroy code.
+      remove_position_html(this);
+    });
+    return marker;
+  }
+  
+  // Figure out the position for a new marker.
+  function next_position(){
+    return $('.coord_position_data').length + 1;
+  }
+  
+  // Figure out the index for a new marker.
+  function next_index(){
+    return marker_data.length;
+  }
+  
+  // Remove the position input field
+  // and replace it with one that will
+  // trigger a destroy call.
+  function remove_position_html(marker){
+    var index = marker_data[marker.get('data_id')].html_id;
+    
+    var destroy_elem = $('<input>').attr({
+      id: 'polygon_coords_attributes_' + index + '__destroy',
+      name: 'polygon[coords_attributes][' + index + '][_destroy]',
+      value: true,
+      type: 'hidden',
+      class: 'coord_destroy'
+    });
+    $('#polygon_coords_attributes_' + index + '_position').replaceWith(destroy_elem);
+  }
+  
+  // Delete the marker from the map
+  // and remove the point from the polygon.
+  function delete_from_map(marker){
+    var index = marker_data[marker.get('data_id')].polygon_id;
+    console.log("Deleteing line: " + index);
+    polygon.getPath().removeAt(index);
+    
+    marker.setMap(null);
+    
+    marker_data[marker.get('data_id')].active = false;
+  }
+<% end %>
+
 <%= form_for([@layer, @polygon]) do |f| %>
   <% if @polygon.errors.any? %>
     <div id="error_explanation">
@@ -23,6 +150,12 @@
     <%= f.label :layer %><br />
     <%= f.collection_select :layer_id, Layer.all, :id, :name %>
   </div>
+    
+  <div id="coord_data">
+    <%= render :partial => 'coords/form', :locals => {:form => f} %>
+  </div>
+  
+  <%= map_canvas %>
   <div class="actions">
     <%= f.submit %>
   </div>

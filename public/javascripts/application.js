@@ -51,6 +51,16 @@ function add_point_to_polyline(point, polyline){
   return position;
 }
 
+// Add a coordinate to a polygon for
+// display purposes only.  Does NOT
+// effect any data structure we care
+// about.
+function add_point_to_polygon(point, polyline){
+  var position = new google.maps.LatLng(point.latitude, point.longitude);
+  polygon.getPath().push(position);
+  return position;
+}
+
 // Add a coordinate to the coordinate datastructure.
 // Requires reference to the location holding the hidden fields.
 function add_coord_to_form(prefix, coord, i, holder){
