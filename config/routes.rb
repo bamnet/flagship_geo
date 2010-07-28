@@ -1,4 +1,4 @@
-Geo::Application.routes.draw do |map|
+Geo::Application.routes.draw do
   resources :layers do
     resources :points
     resources :paths
