@@ -1,6 +1,9 @@
-<h1>Editing path</h1>
+<% content_for :title, "Editing #{@path.name}" %>
+<h1 class="main-title">
+	Editing Path
+	<span><%= link_to 'Cancel and Return', [@layer, @path], :class => 'cancel-link' %></span>
+</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', [@layer, @path] %> |
-<%= link_to 'Back', layer_paths_path %>
+<%= link_to 'Show', [@layer, @path] %>

@@ -1,6 +1,9 @@
-<h1>Editing layer</h1>
+<% content_for :title, "Editing #{@layer.name}" %>
+<h1 class="main-title">
+	Editing Layer
+	<span><%= link_to 'Cancel and Return', @layer, :class => 'cancel-link' %></span>
+</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @layer %> |
-<%= link_to 'Back', layers_path %>
+<%= link_to 'Show', @layer %>

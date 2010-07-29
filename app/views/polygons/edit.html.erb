@@ -1,6 +1,9 @@
-<h1>Editing polygon</h1>
+<% content_for :title, "Editing #{@polygon.name}" %>
+<h1 class="main-title">
+	Editing Polygon
+	<span><%= link_to 'Cancel and Return', [@layer, @polygon], :class => 'cancel-link' %></span>
+</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', [@layer, @polygon] %> |
-<%= link_to 'Back', layer_polygons_path %>
+<%= link_to 'Show', [@layer, @polygon] %>

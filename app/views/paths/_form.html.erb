@@ -6,7 +6,7 @@
      %>
     var point = <%=raw point.to_json() %>;
     
-    map = setup_map(point, 1);
+    map = setup_map(point, 2);
     polyline = new google.maps.Polyline();
     
     polyline.setMap(map);
@@ -125,7 +125,7 @@
   }
 <% end %>
 
-<%= form_for([@layer, @path]) do |f| %>
+<%= form_for([@layer, @path], :html => { :class => 'cmxform'} ) do |f| %>
   <% if @path.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@path.errors.count, "error") %> prohibited this path from being saved:</h2>
@@ -137,26 +137,17 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :layer %><br />
-    <%= f.collection_select :layer_id, Layer.all, :id, :name %>
-  </div>
-  
-  <div id="coord_data">
-    <%= render :partial => 'coords/form', :locals => {:form => f} %>
-  </div>
-  
-  <%= map_canvas %>
-  
+  <fieldset>
+    <ol>
+      <li><%= map_canvas({:style => "height: 300px;"}) %></li>
+      <li><%= f.label :name %> <%= f.text_field :name %></li>
+      <li><%= f.label :description %>  <%= f.text_area :description %></li>
+      <li><%= f.label :layer %> <%= f.collection_select :layer_id, Layer.all, :id, :name %></li>  
+      <div id="coord_data">
+        <%= render :partial => 'coords/form', :locals => {:form => f} %>
+      </div>
+    </ol>
+  </fieldset>
   <div class="actions">
     <%= f.submit %>
   </div>

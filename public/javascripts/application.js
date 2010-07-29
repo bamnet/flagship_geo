@@ -1,3 +1,22 @@
+$(document).ready(function() {
+        //Expandable category tree
+        $('#cat_tree_inset').hide();
+        $('#cat_tree_expand').show();
+        $('#search-jQuery').show();
+        $('#cat_tree_expand').click(function() {
+          $('#cat_tree_inset').toggle();
+          if ($('#label_show').css("display") == "none") {   // case PREVIOUSLY CLOSED
+            $('#label_hide').hide();
+            $('#label_show').show();
+          } else {                                          // case PREVIOUSLY OPEN
+          $('#label_show').hide();
+          $('#label_hide').show();
+          }
+          return false;
+        });
+        //End category tree
+      });
+
 // Create a new map, centered around 
 // center_point, with the specified
 // zoomlevel, and put it in the identified

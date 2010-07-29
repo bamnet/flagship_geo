@@ -33,7 +33,7 @@ class PolygonsController < ApplicationController
   # GET /polygons/new
   # GET /polygons/new.xml
   def new
-    @polygon = Polygon.new
+    @polygon = Polygon.new({:layer => @layer})
 
     respond_to do |format|
       format.html # new.html.erb

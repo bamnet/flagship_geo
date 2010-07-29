@@ -6,36 +6,40 @@
      %>
     var point = <%=raw point.to_json() %>;
     
-    map = setup_map(point, 1);
-    polyline = new google.maps.Polyline();
+    var map = setup_map(point, 1);
+    var polyline = new google.maps.Polyline();
+    var map_bounds = new google.maps.LatLngBounds();
     
     polyline.setMap(map);
     
     var coords = <%=raw @path.coords.to_json() %>;
     
     $.each(coords, function(index, coord){
-      add_point_to_polyline(coord, polyline);
+      position = add_point_to_polyline(coord, polyline);
+      map_bounds.extend(position);
     });
+    map.fitBounds(map_bounds);
 <% end %>
 
-<p id="notice"><%= notice %></p>
+<% content_for :title, @path.name %>
 
-<p>
-  <b>Name:</b>
-  <%= @path.name %>
-</p>
+<h2 class="breadcrumb">
+	<%= link_to "Home", root_path %>&nbsp;/&nbsp;
+	<%= link_to @layer.name, @layer %>&nbsp;/&nbsp;
+</h2>
 
-<p>
-  <b>Description:</b>
-  <%= @path.description %>
-</p>
+<div class="main-title">
 
-<p>
-  <b>Layer:</b>
-  <%= @path.layer.name %>
-</p>
-
-<%= map_canvas %>
-
-<%= link_to 'Edit', edit_layer_path_path(@path) %> |
-<%= link_to 'Back', layer_paths_path %>
+	<%= @path.name %>
+	
+	<%= map_canvas({:style => " height: 500px;"})%>
+	
+	<span>
+		<%=raw @path.description %>
+		<br />
+		<%= link_to 'Edit', edit_layer_path_path(@layer, @path), :class => 'edit-link' %>
+		&nbsp;
+		<%= link_to 'Remove', layer_path_path(@layer, @path), :confirm => 'Are you sure you want to remove this path?', :method => :delete, :class => 'cancel-link' %>
+	</span>
+</div>
+      

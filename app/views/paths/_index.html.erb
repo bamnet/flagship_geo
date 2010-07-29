@@ -1,0 +1,33 @@
+<% if !paths.empty? %>
+<table cellpadding="0" cellspacing="0" width="100%" class="elements">
+ <thead>
+	 <tr class="cat_title">
+		<th style="text-align:right;">Name</th>
+		<th>Center</th>
+		<th style="text-align:left;">Description</th>
+		<th>Created</th>
+		<th>Updated</th>
+		<th></th>
+	 </tr>
+ </thead>
+ <tbody>
+ <% paths.each do |path| %>
+ <tr class="<%= cycle('odd', 'even') %>">
+  <td><% link_to [path.layer, path] do %><h2><%= path.name %></h2><% end %></td>
+  <td class="center_img"></td>
+  <td><p><%=raw path.description %></p></td>
+  <td><%= path.created_at.strftime('%D') unless path.created_at.nil? %></td>
+  <td><%= path.updated_at.strftime('%D') unless path.updated_at.nil? %></td>
+  <td>
+    <span>
+     <%= link_to 'Edit', edit_layer_path_path(path.layer, path), :class => 'edit-link' %>
+     &nbsp;
+     <%= link_to 'Remove', layer_path_path(path.layer, path), :confirm => 'Are you sure you want to remove this path?', :method => :delete, :class => 'cancel-link' %>
+    </span>
+  </td>
+ </tr>
+ <% end %>
+ </tbody>
+</table>
+<% end %>
+<div style="clear:both;"></div>

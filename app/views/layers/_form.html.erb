@@ -1,4 +1,4 @@
-<%= form_for(@layer) do |f| %>
+<%= form_for(@layer, :html => { :class => 'cmxform'} ) do |f| %>
   <% if @layer.errors.any? %>
   <div id="errorExplanation">
     <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
@@ -9,19 +9,13 @@
     </ul>
   </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :color %><br />
-    <%= f.text_field :color %>
-  </div>
+  <fieldset>
+    <ol>
+      <li><%= f.label :name %> <%= f.text_field :name %></li>
+      <li><%= f.label :description %>  <%= f.text_area :description %></li>
+      <li><%= f.label :color %> <%= f.text_field :color %></li>
+    </ol>
+  </fieldset>
   <div class="actions">
     <%= f.submit %>
   </div>

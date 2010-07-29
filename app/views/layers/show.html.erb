@@ -43,27 +43,49 @@
   });
 <% end %>
 
-<p class="notice"><%= notice %></p>
+<% content_for :title, @layer.name %>
 
-<p>
-  <b>Name:</b>
-  <%= @layer.name %>
-</p>
+<h2 class="breadcrumb">
+	<%= link_to "Home", root_path %>&nbsp;/&nbsp;
+</h2>
 
-<p>
-  <b>Description:</b>
-  <%= @layer.description %>
-</p>
+<div class="main-title">
 
-<p>
-  <b>Color:</b>
-  <span style="background-color: <%= @layer.color %>;">
-    <%= @layer.color %>
-  </span>
-</p>
+	<%= @layer.name %>
+	
+	<%= map_canvas({:style => " height: 500px;"})%>
+	
+	<span>
+		<%= @layer.description %>
+		<br />
+		<%= link_to 'Edit', edit_layer_path(@layer), :class => 'edit-link' %>
+		&nbsp;
+		<%= link_to 'Remove', layer_path(@layer), :confirm => 'Are you sure you want to remove this layer?', :method => :delete, :class => 'cancel-link' %>
+	</span>
+</div>
 
-<%= map_canvas %>
+<div class="hr_dl flush"><%= image_tag("bl.png", :alt => "") %></div>
 
+<br />
 
-<%= link_to 'Edit', edit_layer_path(@layer) %> |
-<%= link_to 'Back', layers_path %>
+<div class="mc-indent">
+	<h2>Points <%= link_to 'Add', new_layer_point_path(@layer), :class => "link-button" %></h2>
+	<div>
+	  <%= render :partial => 'points/index', :locals => {:points => @layer.points} %>
+	</div>
+	<br />
+  
+  <h2>Paths <%= link_to 'Add', new_layer_path_path(@layer), :class => "link-button" %></h2>
+	<div>
+	  <%= render :partial => 'paths/index', :locals => {:paths => @layer.paths} %>
+	</div>
+	<br />
+	
+  <h2>Polygons <%= link_to 'Add', new_layer_polygon_path(@layer), :class => "link-button" %></h2>
+	<div>
+	  <%= render :partial => 'polygons/index', :locals => {:polygons => @layer.polygons} %>
+	</div>
+	<br />
+	
+</div>
+
