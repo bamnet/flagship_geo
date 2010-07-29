@@ -55,7 +55,7 @@ function add_point_to_polyline(point, polyline){
 // display purposes only.  Does NOT
 // effect any data structure we care
 // about.
-function add_point_to_polygon(point, polyline){
+function add_point_to_polygon(point, polygon){
   var position = new google.maps.LatLng(point.latitude, point.longitude);
   polygon.getPath().push(position);
   return position;
@@ -82,7 +82,7 @@ function add_coord_to_form(prefix, coord, i, holder){
   $('<input>').attr({
     id: prefix + '_coords_attributes_' + i + '_position',
     name: prefix + '[coords_attributes][' + i + '][position]',
-    class: 'coord_position_data',
+    'class': 'coord_position_data',
     value: coord.position,
     type: 'hidden',
   }).appendTo(holder);
