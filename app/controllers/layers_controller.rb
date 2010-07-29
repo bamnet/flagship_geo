@@ -25,6 +25,11 @@ class LayersController < ApplicationController
             :include => { :coords => {
               :only => [:position, :latitude, :longitude]
             }}
+          },
+          :polygons => {
+            :include => { :coords => {
+              :only => [:position, :latitude, :longitude]
+            }}
           } 
         }
       )}

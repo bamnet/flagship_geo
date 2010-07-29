@@ -28,6 +28,15 @@
       });
       
     });
+    $.each(data.layer.polygons, function(index, polygon_data){
+      var polygon = new google.maps.Polygon();
+      polygon.setMap(map);
+      $.each(polygon_data.coords, function(index, coord){
+        add_point_to_polygon(coord, polygon);
+        map_bounds.extend(pos);
+        points_on_map++;
+      });
+    });
     if(points_on_map > 1){
       map.fitBounds(map_bounds);
     }
