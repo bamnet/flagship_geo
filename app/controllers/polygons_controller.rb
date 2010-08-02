@@ -27,6 +27,7 @@ class PolygonsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @polygon }
+      format.kml  # show.kml.builder
     end
   end
 
