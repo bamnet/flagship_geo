@@ -18,6 +18,7 @@ class LayersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @layer }
+      format.kml  # show.kml.builder
       format.js { render :json => @layer.to_json(
         :include => {
           :points => {}, 

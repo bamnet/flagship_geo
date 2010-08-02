@@ -28,7 +28,7 @@ class PathsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @path }
-      format.kml  { render :partial => "show", :locals => {:path => @path}, :layout => 'application' }
+      format.kml  # show.kml.erb
     end
   end
 

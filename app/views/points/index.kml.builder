@@ -1,5 +1,6 @@
 xml.Folder do
+  xml << render(:partial => 'layers/style', :locals => {:layer => @layer})
   @points.each do |point|
-    xml << render(:partial => 'show', :locals => {:point => point})
+    xml << render(point)
   end
 end 

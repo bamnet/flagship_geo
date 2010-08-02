@@ -2,7 +2,8 @@ xml.Placemark(:id => "polygon_#{polygon.id}") do
   xml.name polygon.name
   xml.description do 
     xml.cdata! polygon.description
-  end 
+  end
+  xml.styleUrl "#layer_#{polygon.layer.id}"
   xml.Polygon do
     xml.outerBoundaryIs do
       xml.LinearRing do
