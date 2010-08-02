@@ -27,7 +27,7 @@ class PointsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @point }
-      format.kml  # show.kml.builder
+      format.kml  { render :partial => "show", :locals => {:point => @point}, :layout => 'application' }
     end
   end
 

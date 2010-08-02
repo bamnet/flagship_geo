@@ -27,7 +27,7 @@ class PolygonsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @polygon }
-      format.kml  # show.kml.builder
+      format.kml  { render :partial => "show", :locals => {:polygon => @polygon}, :layout => 'application' }
     end
   end
 
