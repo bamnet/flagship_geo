@@ -69,19 +69,19 @@
 <br />
 
 <div class="mc-indent">
-	<h2>Points <%= link_to 'Add', new_layer_point_path(@layer), :class => "link-button" %></h2>
+	<h2 id="points">Points <%= link_to 'Add', new_layer_point_path(@layer), :class => "link-button" %></h2>
 	<div>
 	  <%= render :partial => 'points/index', :locals => {:points => @layer.points} %>
 	</div>
 	<br />
   
-  <h2>Paths <%= link_to 'Add', new_layer_path_path(@layer), :class => "link-button" %></h2>
+  <h2 id="paths">Paths <%= link_to 'Add', new_layer_path_path(@layer), :class => "link-button" %></h2>
 	<div>
 	  <%= render :partial => 'paths/index', :locals => {:paths => @layer.paths} %>
 	</div>
 	<br />
 	
-  <h2>Polygons <%= link_to 'Add', new_layer_polygon_path(@layer), :class => "link-button" %></h2>
+  <h2 id="polygons">Polygons <%= link_to 'Add', new_layer_polygon_path(@layer), :class => "link-button" %></h2>
 	<div>
 	  <%= render :partial => 'polygons/index', :locals => {:polygons => @layer.polygons} %>
 	</div>

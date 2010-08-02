@@ -7,13 +7,12 @@ class PathsController < ApplicationController
     @layer = Layer.find(params[:layer_id])
   end
 
-  # GET /paths
   # GET /paths.xml
   def index
     @paths = @layer.paths.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { redirect_to(@layer, :anchor => "paths")}
       format.xml  { render :xml => @paths }
       format.kml # index.kml.builder
       
@@ -87,7 +86,7 @@ class PathsController < ApplicationController
     @path.destroy
 
     respond_to do |format|
-      format.html { redirect_to(layer_paths_url) }
+      format.html { redirect_to(layer_url) }
       format.xml  { head :ok }
     end
   end

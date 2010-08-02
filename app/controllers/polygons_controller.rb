@@ -7,13 +7,12 @@ class PolygonsController < ApplicationController
     @layer = Layer.find(params[:layer_id])
   end
 
-  # GET /polygons
   # GET /polygons.xml
   def index
     @polygons = @layer.polygons.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { redirect_to(@layer, :anchor => "polygons")}
       format.xml  { render :xml => @polygons }
       format.kml # index.kml.builder
     end
@@ -86,7 +85,7 @@ class PolygonsController < ApplicationController
     @polygon.destroy
 
     respond_to do |format|
-      format.html { redirect_to(layer_polygons_url) }
+      format.html { redirect_to(layer_url) }
       format.xml  { head :ok }
     end
   end

@@ -6,12 +6,6 @@ class PointsControllerTest < ActionController::TestCase
     @layer = @point.layer
   end
 
-  test "should get index" do
-    get :index, :layer_id => @layer.to_param
-    assert_response :success
-    assert_not_nil assigns(:points)
-  end
-
   test "should get new" do
     get :new, :layer_id => @layer.to_param
     assert_response :success
@@ -45,6 +39,6 @@ class PointsControllerTest < ActionController::TestCase
       delete :destroy, :id => @point.to_param, :layer_id => @layer.to_param
     end
 
-    assert_redirected_to layer_points_path
+    assert_redirected_to layer_path
   end
 end

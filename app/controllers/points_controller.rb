@@ -7,13 +7,12 @@ class PointsController < ApplicationController
     @layer = Layer.find(params[:layer_id])
   end
 
-  # GET /points
   # GET /points.xml
   def index
     @points = @layer.points.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { redirect_to(@layer, :anchor => "points")}
       format.xml  { render :xml => @points }
       format.kml # index.kml.builder
     end
@@ -86,7 +85,7 @@ class PointsController < ApplicationController
     @point.destroy
 
     respond_to do |format|
-      format.html { redirect_to(layer_points_url) }
+      format.html { redirect_to(layer_url) }
       format.xml  { head :ok }
     end
   end
