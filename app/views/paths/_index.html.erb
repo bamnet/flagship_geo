@@ -13,7 +13,7 @@
  <tbody>
  <% paths.each do |path| %>
  <tr class="<%= cycle('odd', 'even') %>">
-  <td><% link_to [path.layer, path] do %><h2><%= path.name %></h2><% end %></td>
+  <td><%= link_to [path.layer, path] do %><h2><%= path.name %></h2><% end %></td>
   <td class="center_img"></td>
   <td><p><%=raw path.description %></p></td>
   <td><%= path.created_at.strftime('%D') unless path.created_at.nil? %></td>

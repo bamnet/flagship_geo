@@ -13,7 +13,7 @@
  <tbody>
  <% points.each do |point| %>
  <tr class="<%= cycle('odd', 'even') %>">
-  <td><% link_to [point.layer, point] do %><h2><%= point.name %></h2><% end %></td>
+  <td><%= link_to [point.layer, point] do %><h2><%= point.name %></h2><% end %></td>
   <td class="center_img"></td>
   <td><p><%=raw point.description %></p></td>
   <td><%= point.created_at.strftime('%D') unless point.created_at.nil? %></td>

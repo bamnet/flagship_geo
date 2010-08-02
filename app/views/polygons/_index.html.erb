@@ -13,7 +13,7 @@
  <tbody>
  <% polygons.each do |polygon| %>
  <tr class="<%= cycle('odd', 'even') %>">
-  <td><% link_to [polygon.layer, polygon] do %><h2><%= polygon.name %></h2><% end %></td>
+  <td><%= link_to [polygon.layer, polygon] do %><h2><%= polygon.name %></h2><% end %></td>
   <td class="center_img"></td>
   <td><p><%=raw polygon.description %></p></td>
   <td><%= polygon.created_at.strftime('%D') unless polygon.created_at.nil? %></td>
