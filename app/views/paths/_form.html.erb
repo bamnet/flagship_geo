@@ -14,7 +14,7 @@
     var coords = <%=raw @path.coords.to_json() %>;
     
     $.each(coords, function(index, coord){
-      add_point_to_polyline(coord, polyline);
+      add_point_to_polyobject(coord, polyline);
       add_edit_marker_to_map(coord, index);
     });
     
@@ -28,7 +28,7 @@
         position: next_position
       };
       add_coord_to_form('path', coord, index, '#coord_data');
-      add_point_to_polyline(coord, polyline);
+      add_point_to_polyobject(coord, polyline);
       add_edit_marker_to_map(coord, index);
     });
 <% end %>

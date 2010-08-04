@@ -60,23 +60,22 @@ function add_point_to_map(point, map, options){
   return marker;
 }
 
-// Add a coordinate to a polyline for
-// display purposes only.  Does NOT
-// effect any data structure we care
-// about.
+// Wraps add_point_to_polyobject
 function add_point_to_polyline(point, polyline){
-  var position = new google.maps.LatLng(point.latitude, point.longitude);
-  polyline.getPath().push(position);
-  return position;
+  return add_point_to_polyobject(point, polyline);
 }
 
-// Add a coordinate to a polygon for
-// display purposes only.  Does NOT
-// effect any data structure we care
-// about.
+// Wraps add_point_to_polyobject
 function add_point_to_polygon(point, polygon){
+  return add_point_to_polyobject(point, polygon);
+}
+
+// Add a coordinate to a polygon or polyline 
+// for display purposes only.  Does NOT
+// effect any data structure we care about.
+function add_point_to_polyobject(point, polyobject){
   var position = new google.maps.LatLng(point.latitude, point.longitude);
-  polygon.getPath().push(position);
+  polyobject.getPath().push(position);
   return position;
 }
 
